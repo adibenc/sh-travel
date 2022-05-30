@@ -3,6 +3,12 @@
 // translated from https://github.com/jgabriellima/backpropagation
 
 class NeuralNetwork{
+    public $alpha = 0.5;
+
+    public $inputs;
+    public $labels;
+    public $outputs;
+
     public $ni;
     public $nh;
     public $no;
@@ -17,7 +23,12 @@ class NeuralNetwork{
     public $ci;
     public $co;
 
-    public $lastErr = 0;
+    public $lastOutput = 0,
+        $lastErr = 0,
+        $lastIterErr = 0,
+        $lastIter = 0;
+    
+    public $testResults = [];
     
     public $logs = [];
 
@@ -41,12 +52,12 @@ class NeuralNetwork{
         $this->ci = 1;
         $this->co = 1;
 
-        $this->iterCondition = function($idx, $p){
-            return false;
+        $this->iterCondition = function($i){
+            return true;
         };
 
-        $this->iterAction = function($ins, $idx, $p){
-            echo $idx;
+        $this->iterAction = function($ins, $i){
+            echo $i."<br>";
             return false;
         };
     }
@@ -77,6 +88,11 @@ class NeuralNetwork{
     public static function dsigmoid($y){
         return 1 - $y ** 2;
     }
+
+    public static function binaryActivation($x){
+        // return math.tanh(x)
+        return $x > 0 ? 1 : 0;
+    }
     
     public static function getRand($min=0, $max=1, $degree=1){
         return rand($min*10**$degree, $max*10**$degree) / 10**$degree;
@@ -91,7 +107,7 @@ class NeuralNetwork{
             $ar = [];
             $js = 0;
             while($js < $j){
-                $ar[] = $random ? self::getRand(-0.2, 0.2, 3) : $fill;
+                $ar[] = $random ? self::getRand(-0.2, 0.2, 2) : $fill;
                 $js++;
             }
 
@@ -113,7 +129,8 @@ class NeuralNetwork{
 
         // input
         while($i < $this->ni){
-            $this->ai[$i] = $input[$i];
+            $this->ai[$i] = 
+                $input[$i];
             $i++;
         }
 
@@ -140,6 +157,7 @@ class NeuralNetwork{
                 $i++;
             }
             $this->ao[$j] = self::sigmoid($sum);
+            // $this->ao[$j] = self::binaryActivation($sum);
             $j++;
         }
 
@@ -152,8 +170,8 @@ class NeuralNetwork{
         
         // calc err output
         $i = 0; while($i < $this->no){
-            $error = $target[$i] - $this->ao[$i];
-            $outputDeltas[$i] = self::dsigmoid($this->ao[$i]) * $error;
+            $cost = $target[$i] - $this->ao[$i];
+            $outputDeltas[$i] = self::dsigmoid($this->ao[$i]) * $cost;
             $i++;
         }
 
@@ -161,12 +179,12 @@ class NeuralNetwork{
         # calculate error terms for hidden
         $hidden_deltas = self::makeMatrix(1, $this->nh);
         $j = 0; while($j < $this->nh){
-            $error = 0;
+            $cost = 0;
             $k = 0; while($k < $this->no){
-                $error += $outputDelta[$k] * $this->wo[$j][$k];
+                $cost += $outputDeltas[$k] * $this->wo[$j][$k];
                 $k++;
             }
-            $hidden_deltas[$j] = self::dsigmoid($this->ah[$j]) * $error;
+            $hidden_deltas[$j] = self::dsigmoid($this->ah[$j]) * $cost;
             $j++;
         }
 
@@ -201,8 +219,11 @@ class NeuralNetwork{
         }
 
         $error = 0;
+
+        // exit;
         $i = 0; while($i < sizeof($target)){
-            $error += 0.5 * ($target[$i] - $this->ao[$k]) ** 2;
+            $error += $this->alpha * ($target[$i] - $this->ao[$i]) ** 2;
+            
             $i++;
         }
 
@@ -217,18 +238,34 @@ class NeuralNetwork{
         $iterCondition = $this->iterCondition;
         $iterAction = $this->iterAction;
 
+        $this->setInputs(
+            array_map(function($e){
+                return $e[0];
+            }, $patterns)
+        );
+        
+        $this->setLabels(
+            array_map(function($e){
+                return $e[1];
+            }, $patterns)
+        );
+
         $i = 0; while($i < $iter){
             $err = 0;
             foreach($patterns as $idx => $p){
-                $inputs = [0];
-                $targets = [1];
+                $inputs = $p[0];
+                $targets = $p[1];
                 $this->update($inputs);
                 $this->backPropagate($targets, $N, $M);
+                $err += $this->lastErr;
+            }
 
-                if($iterCondition){
-                    if($iterCondition($idx, $p)){
-                        $iterAction($this, $idx, $p);
-                    }
+            $this->lastIterErr = $err;
+            $this->lastIter = $i+1;
+
+            if($iterCondition){
+                if($iterCondition($i)){
+                    $iterAction($this, $i);
                 }
             }
             $i++;
@@ -238,6 +275,12 @@ class NeuralNetwork{
     }
 
     public function test($patterns){
+        foreach($patterns as $idx => $p){
+            $this->update($p[0]);
+            $this->lastOutput = $this->ao;
+            $this->testResults[] = $this->ao;
+        }
+
         return;
     }
 
@@ -257,6 +300,66 @@ class NeuralNetwork{
     public function setLastErr($lastErr)
     {
         $this->lastErr = $lastErr;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of inputs
+     */ 
+    public function getInputs()
+    {
+        return $this->inputs;
+    }
+
+    /**
+     * Set the value of inputs
+     *
+     * @return  self
+     */ 
+    public function setInputs($inputs)
+    {
+        $this->inputs = $inputs;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of outputs
+     */ 
+    public function getOutputs()
+    {
+        return $this->outputs;
+    }
+
+    /**
+     * Set the value of outputs
+     *
+     * @return  self
+     */ 
+    public function setOutputs($outputs)
+    {
+        $this->outputs = $outputs;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of labels
+     */ 
+    public function getLabels()
+    {
+        return $this->labels;
+    }
+
+    /**
+     * Set the value of labels
+     *
+     * @return  self
+     */ 
+    public function setLabels($labels)
+    {
+        $this->labels = $labels;
 
         return $this;
     }
