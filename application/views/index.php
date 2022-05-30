@@ -2,21 +2,21 @@
 
 $baseUrl = base_url();
 $baseAssetUrl = $baseUrl . "assets/";
-$i1 = $baseAssetUrl."images/home/icon1.png";
-// $id = $data["kdwisata"];
-// $wisata = $data["wisata"];
-// $lokasi = $data["lokasi"];
-// $ket1 = $data["ket1"];
-// $ket2 = $data["ket2"];
-// $image = $data["image"];
-// $akses = $data["akses"];
-// $waktu = $data["waktu"];
-// $tiket = $data["tiket"];
-// $kategori = $data["kategori"];
-// $g1 = $data["g1"];
-// $g2 = $data["g2"];
-// $g3 = $data["g3"];
-// $g4 = $data["g4"];
+
+$id = $data["kdwisata"];
+$wisata = $data["wisata"];
+$lokasi = $data["lokasi"];
+$ket1 = $data["ket1"];
+$ket2 = $data["ket2"];
+$image = $data["image"];
+$akses = $data["akses"];
+$waktu = $data["waktu"];
+$tiket = $data["tiket"];
+$kategori = $data["kategori"];
+$g1 = $data["g1"];
+$g2 = $data["g2"];
+$g3 = $data["g3"];
+$g4 = $data["g4"];
 
 ?>  
 <section id="page-breadcrumb">
@@ -39,7 +39,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <img src="<?= $baseAssetUrl.'/images/wisata/c1.png';?>" class='img-responsive' />
+                <img src="<?= $baseAssetUrl.'/images/wisata/'.$data["image"];?>" class='img-responsive' />
             </div>
             <div class="col-sm-6">
                 <p><?= $ket1 ?></p>
@@ -55,7 +55,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="<?= $i1 ?>" alt="">
+                        <img src="images/home/icon1.png" alt="">
                     </div>
                     <h2><b>Lokasi</b></h2>
                     <p><?= $lokasi ?></p>
@@ -64,7 +64,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                        <img src="<?= $baseAssetUrl."images/home/icon2.png" ?>" alt="">
+                        <img src="images/home/icon2.png" alt="">
                     </div>
                     <h2><b>Akses</b></h2>
                     <p><?= $akses ?></p>
@@ -73,7 +73,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
             <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
                 <div class="single-service">
                     <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                        <img src="<?= $baseAssetUrl."images/home/icon3.png" ?>" alt="">
+                        <img src="images/home/icon3.png" alt="">
                     </div>
                     <h2><b>Jam & Tiket </b></h2>
                     <p>Buka <?= $waktu ?>, setiap hari.<br>Dan tiket <?= $tiket ?></p>
@@ -102,7 +102,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class='img-responsive' /> 
+                                        <img src="<?= $baseAssetUrl."/images/wisata/$data[g1]"?>" class='img-responsive' /> 
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +111,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $baseAssetUrl.'/images/wisata/$data[g2]'  ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +120,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $baseAssetUrl.'/images/wisata/$data[g3]'  ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +129,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $baseAssetUrl.'/images/wisata/$data[g4]'  ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>

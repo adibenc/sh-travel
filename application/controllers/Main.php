@@ -1,7 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-include_once(__DIR__."/../libraries/PidumPerkara.php");
-
 class Main extends CI_Controller {
 	 
 	function __construct() {
