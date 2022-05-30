@@ -18,6 +18,12 @@ $baseAssetUrl = $baseUrl . "assets/";
     <link href="<?= $baseAssetUrl.'css/lightbox.css' ?>" rel="stylesheet"> 
     <link href="<?= $baseAssetUrl.'css/main.css' ?>" rel="stylesheet">
     <link href="<?= $baseAssetUrl.'css/responsive.css' ?>" rel="stylesheet">
+
+    <script>
+        let gl = {
+            baseurl: "<?= $baseUrl ?>"
+        }
+    </script>
 </head><!--/head-->
 <body>
     <header id="header">
@@ -38,7 +44,7 @@ $baseAssetUrl = $baseUrl . "assets/";
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php"><h5>Beranda</h5></a></li>
+                        <li><a href="<?= $baseUrl ?>"><h5>Beranda</h5></a></li>
                         <li class="active" class="dropdown"><a href="#">
                             <h5>Wisata Alam<i class="fa fa-angle-down"></i></h5></a>
                             <ul role="menu" class="sub-menu">
@@ -59,12 +65,18 @@ $baseAssetUrl = $baseUrl . "assets/";
                         </li>
                         <li class="dropdown">
                             <a href="<?= $baseUrl."cat/tongkrong" ?>"><h5>Tongkrongan</h5></a></li>
-                        <li><a href="tentang.php"><h5>Tentang</h5></a></li>                    
+                        <li>
+                        <!-- <a href="<?= $baseUrl."home/about" ?>"><h5>Tentang</h5></a></li> -->
+                        <a href="<?= $baseUrl."home/recom" ?>"><h5>Rekomendasi</h5></a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </header>
     <?= $_content; ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="<?= $baseAssetUrl."js/scripts.js" ?>"> </script>
+    <script src="<?= $baseAssetUrl."js/ajaxer.js" ?>"> </script>
+    <?= $_script ?>
     <!--/#team-->
 </body>

@@ -1,6 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+include_once("BaseController.php");
+
+class Home extends BaseController {
 	 
 	function __construct() {
 		parent:: __construct();
@@ -28,6 +30,24 @@ class Home extends CI_Controller {
 		$this->template->display('index', [
 			"data" => $data
 		]);
+	}
+
+	public function about() {
+		$this->template->display('about');
+	}
+
+	public function recom() {
+		$this->template->display('recom');
+	}
+
+	public function predictRecom() {
+		try{
+			self::success("Ok", [
+				1,2,3
+			]);
+		}catch(\Exception $e){
+			self::fail("Failed", $e->getMessage());
+		}
 	}
 
 	public function byCategory($slug){
