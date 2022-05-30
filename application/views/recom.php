@@ -14,29 +14,33 @@
                 <form id="form" action="#">
                     <div class="form-group">
                         <label>Umur</label>
-                        <input class="form-control" type="text" name="umur">
+                        <input class="form-control" type="text" name="umur" value="25">
                     </div>
                     <div class="form-group">
                         <label>Status</label>
-                        <input class="form-control" type="text" name="status">
+                        <input class="form-control" type="text" name="status" value="1">
                     </div>
                     <div class="form-group">
                         <label>Rombongan</label>
-                        <input class="form-control" type="text" name="rombongan">
+                        <input class="form-control" type="text" name="rombongan" value="3">
                     </div>
                     <div class="form-group">
                         <label>Hobi</label>
-                        <input class="form-control" type="text" name="hobi">
+                        <input class="form-control" type="text" name="hobi" value="5">
                     </div>
                     <div class="form-group">
-                        <button class="btn btn-primary">Ambil rekomendasi</button>
+                        <input type="submit" class="btn btn-primary" value="Ambil rekomendasi">
+                        <input type="button" class="btn btn-danger" value="Reset" onClick="reset()">
                     </div>
                 </form>
             </div>
             <div class="col-lg-6">
                 <div class="form-group">
                     <label>Rekomendasi</label>
-                    <textarea class="form-control result" name="result">-</textarea>
+                    <pre>
+                    <textarea class="form-control result" name="result" rows="16">
+                    </textarea>
+                </pre>
                 </div>
             </div>
         </div>
@@ -47,6 +51,13 @@
 <script>
     let routes = {
         predictRecom: gl.baseurl + "home/predictRecom"
+    }
+
+    function reset(){
+        $("[name=umur]").val("")
+        $("[name=status]").val("")
+        $("[name=rombongan]").val("")
+        $("[name=hobi]").val("")
     }
 
     async function getPred({
@@ -72,6 +83,10 @@
         })
 
         $("[name=result]").text( JSON.stringify(res) )
+    })
+
+    $("[value=Reset]").click(()=>{
+        reset()
     })
 </script>
 @endscript
