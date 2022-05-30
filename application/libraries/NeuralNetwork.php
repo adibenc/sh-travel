@@ -17,6 +17,13 @@ class NeuralNetwork{
     public $ci;
     public $co;
 
+    public $lastErr = 0;
+    
+    public $logs = [];
+
+    public $iterCondition;
+    public $iterAction;
+
     public function __construct($ni = 4, $nh = 4, $no = 4){
         #test
         // gmp_random_seed()
@@ -33,6 +40,15 @@ class NeuralNetwork{
         
         $this->ci = 1;
         $this->co = 1;
+
+        $this->iterCondition = function($idx, $p){
+            return false;
+        };
+
+        $this->iterAction = function($ins, $idx, $p){
+            echo $idx;
+            return false;
+        };
     }
 
     public function setFull($ni = 4, $nh = 4, $no = 4){
@@ -86,7 +102,6 @@ class NeuralNetwork{
                 $m[] = $ar;
             }
 
-
             $is++;
         }
 
@@ -94,18 +109,155 @@ class NeuralNetwork{
     }
 
     public function update($input){
+        $i = 0;
+
+        // input
+        while($i < $this->ni){
+            $this->ai[$i] = $input[$i];
+            $i++;
+        }
+
+        // hidden
+        $j = 0;
+        while($j < $this->nh){
+            $sum = 0;
+            $i = 0;
+            while($i < $this->ni){
+                $sum += $this->ai[$i] * $this->wi[$i][$j];
+                $i++;
+            }
+            $this->ah[$j] = self::sigmoid($sum);
+            $j++;
+        }
+
+        // output
+        $j = 0;
+        while($j < $this->no){
+            $sum = 0;
+            $i = 0;
+            while($i < $this->nh){
+                $sum += $this->ah[$i] * $this->wo[$i][$j];
+                $i++;
+            }
+            $this->ao[$j] = self::sigmoid($sum);
+            $j++;
+        }
+
         return;
     }
 
-    public function backPropagate($target){
-        return;
+    public function backPropagate($target, $N, $M){
+        
+        $outputDeltas = self::makeMatrix(1, $this->no );
+        
+        // calc err output
+        $i = 0; while($i < $this->no){
+            $error = $target[$i] - $this->ao[$i];
+            $outputDeltas[$i] = self::dsigmoid($this->ao[$i]) * $error;
+            $i++;
+        }
+
+        // calc err hidden
+        # calculate error terms for hidden
+        $hidden_deltas = self::makeMatrix(1, $this->nh);
+        $j = 0; while($j < $this->nh){
+            $error = 0;
+            $k = 0; while($k < $this->no){
+                $error += $outputDelta[$k] * $this->wo[$j][$k];
+                $k++;
+            }
+            $hidden_deltas[$j] = self::dsigmoid($this->ah[$j]) * $error;
+            $j++;
+        }
+
+        // update output weight
+        $j = 0; while($j < $this->nh){
+            $k = 0; while($k < $this->no){
+                $change = $outputDeltas[$k] * $this->ah[$j];
+                $this->wo[$j][$k] = 
+                    $this->wo[$j][$k] + $N * $change + 
+                        $M * $this->co[$j][$k];
+
+                $this->co[$j][$k] = $change;
+
+                $k++;
+            }
+            $j++;
+        }
+
+        // update input weight
+        $i = 0; while($j < $this->ni){
+            $j = 0; while($k < $this->nh){
+                $change = $hidden_deltas[$k] * $this->ai[$j];
+                $this->wi[$i][$j] = 
+                    $this->wi[$i][$j] + $N * $change + 
+                        $M * $this->ci[$i][$j];
+
+                $this->ci[$i][$j] = $change;
+
+                $j++;
+            }
+            $i++;
+        }
+
+        $error = 0;
+        $i = 0; while($i < sizeof($target)){
+            $error += 0.5 * ($target[$i] - $this->ao[$k]) ** 2;
+            $i++;
+        }
+
+        $this->setLastErr($error);
+
+        return $this;
     }
 
     public function train($patterns, $iter=1000, $N=0, $M=0.1){
+        # N: learning rate
+        # M: momentum factor
+        $iterCondition = $this->iterCondition;
+        $iterAction = $this->iterAction;
+
+        $i = 0; while($i < $iter){
+            $err = 0;
+            foreach($patterns as $idx => $p){
+                $inputs = [0];
+                $targets = [1];
+                $this->update($inputs);
+                $this->backPropagate($targets, $N, $M);
+
+                if($iterCondition){
+                    if($iterCondition($idx, $p)){
+                        $iterAction($this, $idx, $p);
+                    }
+                }
+            }
+            $i++;
+        }
+
         return;
     }
 
     public function test($patterns){
         return;
+    }
+
+    /**
+     * Get the value of lastErr
+     */ 
+    public function getLastErr()
+    {
+        return $this->lastErr;
+    }
+
+    /**
+     * Set the value of lastErr
+     *
+     * @return  self
+     */ 
+    public function setLastErr($lastErr)
+    {
+        $this->lastErr = $lastErr;
+
+        return $this;
     }
 }
