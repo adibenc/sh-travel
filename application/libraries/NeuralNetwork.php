@@ -23,6 +23,8 @@ class NeuralNetwork{
     public $ci;
     public $co;
 
+    public $outputFunc = "sigmoid";
+
     public $lastOutput = 0,
         $lastErr = 0,
         $lastIterErr = 0,
@@ -156,8 +158,13 @@ class NeuralNetwork{
                 $sum += $this->ah[$i] * $this->wo[$i][$j];
                 $i++;
             }
-            $this->ao[$j] = self::sigmoid($sum);
-            // $this->ao[$j] = self::binaryActivation($sum);
+
+            if($this->outputFunc == "binary") {
+                $this->ao[$j] = self::binaryActivation($sum);
+            } else {
+                $this->ao[$j] = self::sigmoid($sum);
+            }
+
             $j++;
         }
 
@@ -284,6 +291,27 @@ class NeuralNetwork{
         return;
     }
 
+    public function saveModel($at = null){
+        if(!$at){
+            $date = date("Y-m-d");
+            $at = __DIR__."/dummy-$date-model-nn-wisata";
+        }
+
+        $t1 = $this->iterCondition;
+        $t2 = $this->iterAction;
+        
+        unset($this->iterCondition);
+        unset($this->iterAction);
+
+        $s = serialize($this);
+        file_put_contents($at, $s);
+
+        $this->iterCondition = $t1;
+        $this->iterAction = $t2;
+
+        return true;
+    }
+
     /**
      * Get the value of lastErr
      */ 
@@ -360,6 +388,26 @@ class NeuralNetwork{
     public function setLabels($labels)
     {
         $this->labels = $labels;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of outputFunc
+     */ 
+    public function getOutputFunc()
+    {
+        return $this->outputFunc;
+    }
+
+    /**
+     * Set the value of outputFunc
+     *
+     * @return  self
+     */ 
+    public function setOutputFunc($outputFunc)
+    {
+        $this->outputFunc = $outputFunc;
 
         return $this;
     }
