@@ -77,6 +77,11 @@ $baseAssetUrl = $baseUrl . "assets/";
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="<?= $baseAssetUrl."js/scripts.js" ?>"> </script>
     <script src="<?= $baseAssetUrl."js/ajaxer.js" ?>"> </script>
+    <script type="text/javascript" src="<?= $baseAssetUrl."js/jquery.js"?>"></script>
+    <script type="text/javascript" src="<?= $baseAssetUrl."js/bootstrap.min.js"?>"></script>
+    <script type="text/javascript" src="<?= $baseAssetUrl."js/lightbox.min.js"?>"></script>
+    <script type="text/javascript" src="<?= $baseAssetUrl."js/wow.min.js"?>"></script>
+    <script type="text/javascript" src="<?= $baseAssetUrl."js/main.js"?>"></script>  
     <?= $_script ?>
     <!--/#team-->
 </body>
