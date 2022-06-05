@@ -109,7 +109,7 @@ class Home extends BaseController {
 				"raw" => $nn1->testResults,
 				"join" => $key,
 				"parsed" => $mapped ? $mapped : $this->labelMap["0000000000000000010"],
-				"parsed" => $this->mapGames("1111000"),
+				"games" => $this->mapGames("1111000"),
 			]);
 		}catch(\Exception $e){
 			self::fail("Failed", $e->getMessage());
@@ -119,13 +119,13 @@ class Home extends BaseController {
 	public function byCategory($slug){
 		$rslug = [
 			"gunung" => 1,
+			"air-terjun" => 2,
 			"goa" => 3,
-			"pemandian" => 3,
+			"pemandian" => 4,
 			"taman" => 5,
-			"candi" => 5,
-			"kampung" => 6,
-			
-			"tongkrong" => 7,
+			"candi" => 6,
+			"kampung" => 7,
+			"tongkrong" => 8,
 		];
 		$id = arrayGet($rslug, $slug);
 		$data = $this->wisata->byCategory($id)->row_array();
