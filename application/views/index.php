@@ -9,7 +9,7 @@ $baseAssetUrl = $baseUrl . "assets/";
                 <div class="slide-text">
                     <h1><b>Hallo 💙</b></h1>
                     <p><h4>Disini adalah penyedia informasi tempat wisata di Kota Malang dari wisata alam, wisata buatan, wisata edukasi, tempat nongkrong asik milenial dan sebagainya.</h4></p>
-                    <a href="tentang.php" class="btn btn-common">ABOUT</a>
+                    <a href="<?= $baseUrl."home/about" ?>" class="btn btn-common">ABOUT</a>
                 </div>
                 <img src="<?= $baseAssetUrl."images/home/slider/hill.png" ?>" class="slider-hill" alt="slider image">
                 <img src="<?= $baseAssetUrl."images/home/slider/house.png" ?>" class="slider-house" alt="slider image">
