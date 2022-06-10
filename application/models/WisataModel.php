@@ -1,7 +1,9 @@
 <?php 
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class WisataModel extends CI_model {
+include_once(__DIR__."/BaseModel.php");
+
+class WisataModel extends BaseModel {
 	
 	public $table, $withSession = true;
 
@@ -10,6 +12,16 @@ class WisataModel extends CI_model {
 			INNER JOIN tbkategori ON(tbwisata.kdkategori = tbkategori.kdkategori)
 			INNER JOIN tbdetailwisata ON(tbwisata.kdwisata = tbdetailwisata.kdwisata)
 			WHERE tbwisata.kdkategori = $id";
+		return $this->db->query($q);
+	}
+
+	function allCafe() {
+		$this->table = "tbtongkrongan";
+		return $this->getMulti([]);
+	}
+
+	function cafeByCategory($id) {
+		$q = "SELECT * from tbtongkrongan WHERE kdcafe=$id";
 		return $this->db->query($q);
 	}
 }
