@@ -127,6 +127,14 @@ class Home extends BaseController {
 			"kampung" => 7,
 			"tongkrong" => 8,
 		];
+
+		if($slug == "tongkrong"){
+			$data = $this->wisata->allCafe();
+			$this->template->display('detail-cafe', [
+				'cafes' => $data
+			]);
+			return;
+		}
 		$id = arrayGet($rslug, $slug);
 		$data = $this->wisata->byCategory($id)->row_array();
 
