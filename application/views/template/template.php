@@ -49,7 +49,7 @@ $baseAssetUrl = $baseUrl . "assets/";
                             <h5>Wisata Alam<i class="fa fa-angle-down"></i></h5></a>
                             <ul role="menu" class="sub-menu">
                                 <li class="active" ><a href="<?= $baseUrl."cat/gunung" ?>">Pendakian</a></li>
-                                <li><a href="wisata_airterjun.php">Air Terjun</a></li>
+                                <li><a href="<?= $baseUrl."cat/air-terjun" ?>">Air Terjun</a></li>
                                 <li><a href="<?= $baseUrl."cat/goa" ?>">Goa</a></li>
                                 <li><a href="<?= $baseUrl."cat/pemandian" ?>">Pemandian</a></li>
                             </ul>

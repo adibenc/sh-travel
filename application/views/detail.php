@@ -3,6 +3,12 @@
 $baseUrl = base_url();
 $baseAssetUrl = $baseUrl . "assets/";
 $i1 = $baseAssetUrl."images/home/icon1.png";
+$pg1 = $baseAssetUrl."images/wisata/".$g1;
+$pg2 = $baseAssetUrl."images/wisata/".$g2;
+$pg3 = $baseAssetUrl."images/wisata/".$g3;
+$pg4 = $baseAssetUrl."images/wisata/".$g4;
+// preout($g1);
+// exit;
 // $id = $data["kdwisata"];
 // $wisata = $data["wisata"];
 // $lokasi = $data["lokasi"];
@@ -39,7 +45,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
-                <img src="<?= $baseAssetUrl.'/images/wisata/c1.png';?>" class='img-responsive' />
+                <img src="<?= $baseAssetUrl."images/wisata/".$image ;?>" class='img-responsive' />
             </div>
             <div class="col-sm-6">
                 <p><?= $ket1 ?></p>
@@ -102,7 +108,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class='img-responsive' /> 
+                                        <img src="<?= $pg1 ?>" class='img-responsive' /> 
                                     </div>
                                 </div>
                             </div>
@@ -111,7 +117,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $pg2 ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +126,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $pg3 ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +135,7 @@ $i1 = $baseAssetUrl."images/home/icon1.png";
                             <div class="team-single-wrapper">
                                 <div class="team-single">
                                     <div class="person-thumb">
-                                        <img src="<?= $i1 ?>" class="img-responsive" />
+                                        <img src="<?= $pg4 ?>" class="img-responsive" />
                                     </div>
                                 </div>
                             </div>
