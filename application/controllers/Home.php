@@ -4,7 +4,7 @@ include_once("BaseController.php");
 include_once(__DIR__."/../libraries/NeuralNetwork.php");
 
 class Home extends BaseController {
-	public $modelPath = "/opt/lampp/htdocs/sh-travel/application/libraries/dummy-2022-05-31-model-nn-wisata";
+	public $modelPath = "C:/xampp2/htdocs/sh-travel/application/libraries/dummy-2022-05-31-model-nn-wisata";
 	
 	public $games = [
 		"panah", "labirin", "paintball", "ffox", "tamankelinci", "atv", "sepeda"

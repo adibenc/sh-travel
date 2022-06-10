@@ -1,7 +1,5 @@
 <?php
 
-// translated from https://github.com/jgabriellima/backpropagation
-
 class NeuralNetwork{
     public $alpha = 0.5;
 
