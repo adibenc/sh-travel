@@ -136,7 +136,7 @@
                 :name
             </button>`
             
-            res.data.games.forEach((e)=>{
+            res.data.parsed.forEach((e)=>{
                 if(e){
                     recoms += fmt.replace(":name", e)
                 }

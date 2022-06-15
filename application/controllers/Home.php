@@ -37,6 +37,7 @@ class Home extends BaseController {
 		//$this->current_db = $this->load->database('default',TRUE);
 		$this->load->library('template');
 		$this->load->model('WisataModel', 'wisata');
+		$this->load->library('ShFlask', 'shflask');
 	}
 	
 	public function index() {
@@ -82,35 +83,14 @@ class Home extends BaseController {
 	public function predictRecom() {
 		try{
 			$posts = $this->posts();
-			$fname = $this->modelPath;
-			$nn1 = unserialize(
-				file_get_contents($fname)
+			$predict = $this->shflask->predict(
+				$posts['umur'],
+				$posts['status'],
+				$posts['rombongan'],
+				$posts['hobi'],
 			);
 
-			// $pattest = json_decode(
-			// 	file_get_contents("/opt/lampp/htdocs/sh-travel/dummy/ds-test.json")
-			// );
-			$pattest = [
-				[
-					[
-						$posts['umur'],
-						$posts['status'],
-						$posts['rombongan'],
-						$posts['hobi'],
-					], 
-					[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-				]
-			];
-			$result = $nn1->test($pattest);
-			$key = implode("",$nn1->testResults[0]);
-			$mapped = arrayGet($this->labelMap, $key);
-
-			self::success("Ok", [
-				"raw" => $nn1->testResults,
-				"join" => $key,
-				"parsed" => $mapped ? $mapped : $this->labelMap["0000000000000000010"],
-				"games" => $this->mapGames("1111000"),
-			]);
+			self::success("Ok", $predict ? $predict->data : null );
 		}catch(\Exception $e){
 			self::fail("Failed", $e->getMessage());
 		}

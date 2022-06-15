@@ -45,6 +45,10 @@ $baseAssetUrl = $baseUrl . "assets/";
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<?= $baseUrl ?>"><h5>Beranda</h5></a></li>
+                        <li>
+                            <a href="<?= $baseUrl."home/recom" ?>"><h5>Rekomendasi</h5></a>
+                        </li>
+                            <!-- <a href="<?= $baseUrl."home/about" ?>"><h5>Tentang</h5></a></li> -->
                         <li class="active" class="dropdown"><a href="#">
                             <h5>Wisata Alam<i class="fa fa-angle-down"></i></h5></a>
                             <ul role="menu" class="sub-menu">
@@ -65,9 +69,6 @@ $baseAssetUrl = $baseUrl . "assets/";
                         </li>
                         <li class="dropdown">
                             <a href="<?= $baseUrl."cat/tongkrong" ?>"><h5>Tongkrongan</h5></a></li>
-                        <li>
-                        <!-- <a href="<?= $baseUrl."home/about" ?>"><h5>Tentang</h5></a></li> -->
-                        <a href="<?= $baseUrl."home/recom" ?>"><h5>Rekomendasi</h5></a></li>
                     </ul>
                 </div>
             </div>
